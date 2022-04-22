@@ -17,7 +17,7 @@ module "vpc" {
       mtu                  = 0
     },
     {
-      name                 = "vpc-02"
+      name                 = "vpc-03"
       routing_mode         = "GLOBAL"
       create_subnetworks   = false
       delete_default_route = true
