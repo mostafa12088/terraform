@@ -32,7 +32,7 @@ resource "google_compute_network" "network" {
 [Shard-VPC](https://cloud.google.com/vpc/docs/shared-vpc)
 
 # Linking Image using Exclamatory(!) Sign
-![Test_image](https://drive.google.com/drive/u/0/my-drive)
+![Test_image](https://github.com/mostafa12088/terraform/blob/main/Screenshot%202022-04-11%20at%2015.04.18.png)
 
 ### Some text
 ---
