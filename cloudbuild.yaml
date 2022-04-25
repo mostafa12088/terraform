@@ -1,0 +1,70 @@
+steps:
+  - name: 'hashicorp/terraform:1.0.0'
+    args:
+      - '-c'
+      - |
+        echo "***********************"
+        echo "$BRANCH_NAME"
+        echo "***********************"
+    id: branch name
+    entrypoint: sh
+  - name: 'hashicorp/terraform:1.0.0'
+    args:
+      - '-c'
+      - |
+        if [ -d "vpc/$BRANCH_NAME/" ]; then
+          cd vpc/$BRANCH_NAME
+          terraform init
+        else
+          for dir in vpc/*/
+          do 
+            cd ${dir}   
+            env=${dir%*/}
+            env=${env#*/}
+            echo ""
+            echo "*************** TERRAFORM INIT ******************"
+            echo "******* At environment: ${env} ********"
+            echo "*************************************************"
+            terraform init || exit 1
+            cd ../../
+          done
+        fi 
+    id: tf init
+    entrypoint: sh
+  - name: 'hashicorp/terraform:1.0.0'
+    args:
+      - '-c'
+      - |
+        if [ -d "vpc/$BRANCH_NAME/" ]; then
+          cd vpc/$BRANCH_NAME
+          terraform plan
+        else
+          for dir in vpc/*/
+          do 
+            cd ${dir}   
+            env=${dir%*/}
+            env=${env#*/}  
+            echo ""
+            echo "*************** TERRAFOM PLAN ******************"
+            echo "******* At environment: ${env} ********"
+            echo "*************************************************"
+            terraform plan || exit 1
+            cd ../../
+          done
+        fi 
+    id: tf plan
+    entrypoint: sh
+  - name: 'hashicorp/terraform:1.0.0'
+    args:
+      - '-c'
+      - |
+        if [ -d "vpc/$BRANCH_NAME/" ]; then
+          cd vpc/$BRANCH_NAME      
+          terraform apply -auto-approve
+        else
+          echo "***************************** SKIPPING APPLYING *******************************"
+          echo "Branch '$BRANCH_NAME' does not represent an oficial environment."
+          echo "*******************************************************************************"
+        fi
+    id: tf apply
+    entrypoint: sh
