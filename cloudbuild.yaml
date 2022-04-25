@@ -12,11 +12,11 @@ steps:
     args:
       - '-c'
       - |
-        if [ -d "vpc/$BRANCH_NAME/" ]; then
-          cd vpc/$BRANCH_NAME
+        if [ -d "terraform/vpc/$BRANCH_NAME/" ]; then
+          cd terraform/vpc/$BRANCH_NAME
           terraform init
         else
-          for dir in vpc/*/
+          for dir in terraform/vpc/*/
           do 
             cd ${dir}   
             env=${dir%*/}
@@ -35,11 +35,11 @@ steps:
     args:
       - '-c'
       - |
-        if [ -d "vpc/$BRANCH_NAME/" ]; then
-          cd vpc/$BRANCH_NAME
+        if [ -d "terraform/vpc/$BRANCH_NAME/" ]; then
+          cd terraform/vpc/$BRANCH_NAME
           terraform plan
         else
-          for dir in vpc/*/
+          for dir in terraform/vpc/*/
           do 
             cd ${dir}   
             env=${dir%*/}
@@ -58,8 +58,8 @@ steps:
     args:
       - '-c'
       - |
-        if [ -d "vpc/$BRANCH_NAME/" ]; then
-          cd vpc/$BRANCH_NAME      
+        if [ -d "terraform/vpc/$BRANCH_NAME/" ]; then
+          cd terraform/vpc/$BRANCH_NAME      
           terraform apply -auto-approve
         else
           echo "***************************** SKIPPING APPLYING *******************************"
