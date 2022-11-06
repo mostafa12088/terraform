@@ -87,7 +87,7 @@ module "vpc" {
 
     allow = [{
       protocol = "tcp"
-      ports    = ["22", 443]
+      ports    = ["22"]
       },
       {
         protocol = "icmp"
